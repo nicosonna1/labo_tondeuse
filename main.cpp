@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-// Fichier     main.h
+// Fichier     main.cpp
 // Auteur      GM Breguet
 // Date        21.11.2022
 //
@@ -13,9 +13,6 @@
 //------------------------------------------------------------------------------
 
 #include <cstdlib>
-#include <iostream>
-
-#include "annexe.h"
 #include "tondeuse.h"
 
 using namespace std;
@@ -78,7 +75,10 @@ int main(){
     Tondeuse tondeuse = {1, 3};
 
     // tondre => n déplacements aléatoires
-    tondre(terrain, tondeuse, 10'000, true);
+    tondre(terrain,      // terrain de travail
+           tondeuse,     // tondeuse
+           10'000,       // nbre de pas
+           true);        // afficher à chaque pas
 
     return EXIT_SUCCESS;
 }
