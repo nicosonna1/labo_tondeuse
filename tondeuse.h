@@ -18,7 +18,21 @@
 
 #include <vector> // std::vector
 
-using Ligne = std::vector<int>;
+static char L = '#',
+    X = 'X',
+    H = '~',
+    C = '.',
+    COUPE=C,
+    HERBE=H,
+    LIGNE =0,
+    COLONNE=1,
+    LIMITE =L,
+    OBSTACLE=X;
+
+
+
+
+using Ligne = std::vector<char>;
 using Terrain = std::vector<Ligne>;
 using Tondeuse = std::vector<int>;
 
@@ -29,8 +43,8 @@ using Tondeuse = std::vector<int>;
  * @param nbrePass
  * @param afficherEvolution
  */
-void tondre(Terrain,
-            Tondeuse,
+void tondre(Terrain terrain,
+            Tondeuse tondeuse,
             int nbrePass,
             bool afficherEvolution);
 

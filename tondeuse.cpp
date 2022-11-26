@@ -14,28 +14,78 @@
 //---------------------------------------------------------
 
 #include "tondeuse.h"
+
+#include <iomanip> // setw(..)
+#include <iostream> // cout & cin
 #include <random>
 
-const short gauche=0,
-            bas   =1,
-            droite=2,
-            haut  =3;
+using namespace std;
+
+const int RANGE_FROM = 0,
+          RANGE_TO = 3;
+
+// Pour le random plus tard
+const short BAS = 0,
+            GAUCHE = 1,
+            HAUT = 2,
+            DROIT = 3;
 
 
-// pour le random plus tard
-distr(RANGE_FROM, RANGE_TO)
-
-void tondre(terrain,tondeuse,10'000,true){
-
-
+void afficherTerrain(Terrain terrain) {
+    system("cls");
+    for(Ligne ligne: terrain){
+        for(char j: ligne)
+            cout << j;
+        cout << endl;
+    }
 }
 
-void afficher(const vector<int>& vecteur, int nombreColonnes) {
-    for (size_t i = 0; i < vecteur.size(); ++i) {
-        cout << setw(LARGEUR_CELLULE) << vecteur[i] << " ";
+Tondeuse prochainPosition(Tondeuse tondeuse, Terrain terrain){
+    Tondeuse nouvellePostion = tondeuse;
+    int random;
 
-        if (nombreColonnes != 0 && (i + 1) % nombreColonnes == 0) {
-            cout << endl;
+    //  0 1
+    // {5,7}
+
+    do {
+        // Obtenir la direction --> un random entre 0 est 3
+        uniform_int_distribution<int> distr(RANGE_FROM, RANGE_TO); // 3
+
+        // Calculer nouvelle position
+        switch (random) {
+            case BAS:
+                nouvellePostion[LIGNE] = ++nouvellePostion[LIGNE];
+                break;
+            case GAUCHE:
+                nouvellePostion[COLONNE] = --nouvellePostion[COLONNE];
+                break;
+            case HAUT:
+                nouvellePostion[LIGNE] = --nouvellePostion[LIGNE];
+                break;
+            case DROIT:
+                nouvellePostion[COLONNE] = ++nouvellePostion[COLONNE];
+                break;
         }
+
+        // Valider la nouvelle position
+    } while (terrain[nouvellePostion[LIGNE]][nouvellePostion[COLONNE]] == LIMITE ||
+    terrain[nouvellePostion[LIGNE]][nouvellePostion[COLONNE]] == OBSTACLE );
+
+    return nouvellePostion;
+}
+
+void couper(Tondeuse tondeuse, Terrain terrain) {
+    if(terrain[tondeuse[LIGNE]][tondeuse[COLONNE]]==HERBE)
+        terrain[tondeuse[LIGNE]][tondeuse[COLONNE]]=COUPE;
+}
+
+void tondre(Terrain terrain, Tondeuse tondeuse, int nbrePas, bool afficherEvolution){
+    afficherTerrain(terrain);
+    for (int i = 0; i < nbrePas; ++i) {
+        tondeuse = prochainPosition(tondeuse, terrain);
+        couper(tondeuse, terrain);
+        if (afficherEvolution)
+            afficherTerrain(terrain);
     }
+    afficherTerrain(terrain);
 }

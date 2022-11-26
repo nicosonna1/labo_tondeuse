@@ -18,10 +18,4 @@
 
 #include<vector> // std::vector
 
-//using Vect = vector<int>;
-
-//Vect Terrain = vector<int>(taille, true);
-//vector<int> Terrain = vector<int>(taille, true);
-
-
 #endif //LABO_TONDEUSE_ANNEXE_H
