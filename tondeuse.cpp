@@ -35,24 +35,31 @@ void afficherTerrain(Terrain terrain) {
     system("cls");
     for(Ligne ligne: terrain){
         for(char j: ligne)
-            cout << j;
+            cout << ' ' << j;
         cout << endl;
     }
 }
 
+int randomPosition(const int min, const int max)
+{
+    random_device                  rand_dev;
+    default_random_engine          generator(rand_dev());
+    uniform_int_distribution<int>  distr(RANGE_FROM, RANGE_TO);
+    return distr(generator);
+}
+
 Tondeuse prochainPosition(Tondeuse tondeuse, Terrain terrain){
-    Tondeuse nouvellePostion = tondeuse;
+    Tondeuse nouvellePostion ;
     int random;
 
     //  0 1
     // {5,7}
 
     do {
+        nouvellePostion = tondeuse;
         // Obtenir la direction --> un random entre 0 est 3
-        uniform_int_distribution<int> distr(RANGE_FROM, RANGE_TO); // 3
-
         // Calculer nouvelle position
-        switch (random) {
+        switch (randomPosition(0,1)) {
             case BAS:
                 nouvellePostion[LIGNE] = ++nouvellePostion[LIGNE];
                 break;
