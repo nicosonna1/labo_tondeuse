@@ -22,15 +22,12 @@ static char L = '#',
     X = 'X',
     H = '~',
     C = '.',
-    COUPE=C,
-    HERBE=H,
-    LIGNE =0,
-    COLONNE=1,
-    LIMITE =L,
-    OBSTACLE=X;
-
-
-
+    COUPE = C,
+    HERBE = H,
+    LIGNE = 0,
+    COLONNE = 1,
+    LIMITE = L,
+    OBSTACLE = X;
 
 using Ligne = std::vector<char>;
 using Terrain = std::vector<Ligne>;
@@ -48,4 +45,4 @@ void tondre(Terrain terrain,
             int nbrePass,
             bool afficherEvolution);
 
-#endif //LABO_TONDEUSE_TONDEUSE_H
+#endif // LABO_TONDEUSE_TONDEUSE_H
