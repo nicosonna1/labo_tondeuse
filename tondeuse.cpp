@@ -5,7 +5,11 @@
 // Auteur(s)      : Sonnard Nicolas
 //                  Villegas Castrillon Adrian
 // Date           : 2022/11/28
-// But            : TODO.
+// But            : Prgramme permettant de simuler un tondeuse a gason
+//                  la tondeuse ira dans un direction aleatoire.
+//                  Attention parfois elle sera face a un obstacle
+//                  celle-ci sera capable de changer sa direction.
+//                  Se referer au document  "Labo_Tondeuse.pdf" pour toute explication
 // Modifications  : N/A
 // Remarque(s)    : TODO.
 // Versions       : g++ 9.4.0
@@ -25,11 +29,16 @@ using namespace std;
 const int RANGE_FROM = 0,
           RANGE_TO = 3;
 
+ //  constante des differentes directions
 const short BAS = 0,
             GAUCHE = 1,
             HAUT = 2,
             DROIT = 3;
-
+/**
+ *  afficher le terrain a l'utilisateur
+ *
+ * @param terrain
+ */
 void afficherTerrain(Terrain terrain)
 {
     system("cls");
@@ -41,7 +50,10 @@ void afficherTerrain(Terrain terrain)
     }
     cout << endl;
 }
-
+/**
+ * permet de generer un nombre aleatoir
+ * @return nombre aleatoire
+ */
 int randomPosition()
 {
     random_device rand_dev;
@@ -49,11 +61,21 @@ int randomPosition()
     uniform_int_distribution<int> distr(RANGE_FROM, RANGE_TO);
     return distr(generator);
 }
-
+/**
+ *  retourne la valeur d'une case demandee
+ * @param terrain
+ * @param position
+ * @return
+ */
 char retournerCase(Terrain terrain, Tondeuse position){
     return terrain[position[LIGNE]][position[COLONNE]];
 }
-
+/**
+ *
+ * @param tondeuse
+ * @param terrain
+ * @return prochaine prostion de la tondeuse
+ */
 Tondeuse prochainPosition(Tondeuse tondeuse, Terrain terrain)
 {
     Tondeuse nouvellePostion  = tondeuse;
@@ -86,6 +108,14 @@ Tondeuse prochainPosition(Tondeuse tondeuse, Terrain terrain)
 
     return nouvellePostion;
 }
+/**
+ * Coupe l'herbe du terrain --> permet de remplacer l'herbe non coupee
+ * par de l'herbe coupee
+ *
+ * @param tondeuse
+ * @param terrain
+ * @return terrain
+ */
 
 Terrain couper(Tondeuse tondeuse, Terrain terrain)
 {
@@ -93,7 +123,17 @@ Terrain couper(Tondeuse tondeuse, Terrain terrain)
         terrain[tondeuse[LIGNE]][tondeuse[COLONNE]] = 'O';
     return terrain;
 }
-
+/**
+ *  fonction principale du programme
+ *  elle appelera les sous programme afin de :
+ *  - afficher le terrain
+ *  - tondre le terrain
+ *  - possibilite d'afficher l'evolution de la tonte
+ * @param terrain
+ * @param tondeuse
+ * @param nbrePas
+ * @param afficherEvolution
+ */
 void tondre(Terrain terrain, Tondeuse tondeuse, int nbrePas, bool afficherEvolution)
 {
     afficherTerrain(terrain);
@@ -106,6 +146,4 @@ void tondre(Terrain terrain, Tondeuse tondeuse, int nbrePas, bool afficherEvolut
         cout << i << endl;
     }
     afficherTerrain(terrain);
-    int test;
-    cin >> test;
 }
