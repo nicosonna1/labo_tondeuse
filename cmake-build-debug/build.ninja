@@ -55,14 +55,14 @@ build CMakeFiles/labo_tondeuse.dir/main.cpp.obj: CXX_COMPILER__labo_tondeuse_Deb
   OBJECT_DIR = CMakeFiles\labo_tondeuse.dir
   OBJECT_FILE_DIR = CMakeFiles\labo_tondeuse.dir
 
-build CMakeFiles/labo_tondeuse.dir/tondeuse.cpp.obj: CXX_COMPILER__labo_tondeuse_Debug C$:/Users/adcas/Documents/heigvd/git/labo_tondeuse/tondeuse.cpp || cmake_object_order_depends_target_labo_tondeuse
-  DEP_FILE = CMakeFiles\labo_tondeuse.dir\tondeuse.cpp.obj.d
+build CMakeFiles/labo_tondeuse.dir/annexe.cpp.obj: CXX_COMPILER__labo_tondeuse_Debug C$:/Users/adcas/Documents/heigvd/git/labo_tondeuse/annexe.cpp || cmake_object_order_depends_target_labo_tondeuse
+  DEP_FILE = CMakeFiles\labo_tondeuse.dir\annexe.cpp.obj.d
   FLAGS = -Wall -Wextra -Wconversion -Wsign-conversion -pedantic -g -std=gnu++20
   OBJECT_DIR = CMakeFiles\labo_tondeuse.dir
   OBJECT_FILE_DIR = CMakeFiles\labo_tondeuse.dir
 
-build CMakeFiles/labo_tondeuse.dir/annexe.cpp.obj: CXX_COMPILER__labo_tondeuse_Debug C$:/Users/adcas/Documents/heigvd/git/labo_tondeuse/annexe.cpp || cmake_object_order_depends_target_labo_tondeuse
-  DEP_FILE = CMakeFiles\labo_tondeuse.dir\annexe.cpp.obj.d
+build CMakeFiles/labo_tondeuse.dir/tondeuse.cpp.obj: CXX_COMPILER__labo_tondeuse_Debug C$:/Users/adcas/Documents/heigvd/git/labo_tondeuse/tondeuse.cpp || cmake_object_order_depends_target_labo_tondeuse
+  DEP_FILE = CMakeFiles\labo_tondeuse.dir\tondeuse.cpp.obj.d
   FLAGS = -Wall -Wextra -Wconversion -Wsign-conversion -pedantic -g -std=gnu++20
   OBJECT_DIR = CMakeFiles\labo_tondeuse.dir
   OBJECT_FILE_DIR = CMakeFiles\labo_tondeuse.dir
@@ -75,7 +75,7 @@ build CMakeFiles/labo_tondeuse.dir/annexe.cpp.obj: CXX_COMPILER__labo_tondeuse_D
 #############################################
 # Link the executable labo_tondeuse.exe
 
-build labo_tondeuse.exe: CXX_EXECUTABLE_LINKER__labo_tondeuse_Debug CMakeFiles/labo_tondeuse.dir/main.cpp.obj CMakeFiles/labo_tondeuse.dir/tondeuse.cpp.obj CMakeFiles/labo_tondeuse.dir/annexe.cpp.obj
+build labo_tondeuse.exe: CXX_EXECUTABLE_LINKER__labo_tondeuse_Debug CMakeFiles/labo_tondeuse.dir/main.cpp.obj CMakeFiles/labo_tondeuse.dir/annexe.cpp.obj CMakeFiles/labo_tondeuse.dir/tondeuse.cpp.obj
   FLAGS = -Wall -Wextra -Wconversion -Wsign-conversion -pedantic -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\labo_tondeuse.dir

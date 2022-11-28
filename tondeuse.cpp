@@ -5,11 +5,11 @@
 // Auteur(s)      : Sonnard Nicolas
 //                  Villegas Castrillon Adrian
 // Date           : 2022/11/28
-// But            : Prgramme permettant de simuler un tondeuse a gason
+// But            : Programme permettant de simuler une tondeuse a gason
 //                  la tondeuse ira dans un direction aleatoire.
 //                  Attention parfois elle sera face a un obstacle
 //                  celle-ci sera capable de changer sa direction.
-//                  Se referer au document  "Labo_Tondeuse.pdf" pour toute explication
+//                  Se referer au document "Labo_Tondeuse.pdf" pour toute explication
 // Modifications  : N/A
 // Remarque(s)    : TODO.
 // Versions       : g++ 9.4.0
@@ -17,32 +17,32 @@
 //                  C++ standard 20 (CMakeLists.txt)
 //---------------------------------------------------------
 
-#include "tondeuse.h"
-
-#include <iomanip>  // setw(..)
-#include <iostream> // cout & cin
-#include <random>
+#include "tondeuse.h" // En-tete correspondante (contient les definitions des
+                      // fonctions)
+#include "annexe.h"   // Outils externes
+#include <iostream>   // cout & cin
 
 using namespace std;
 
-// Pour le random plus tard
+// Constantes pour le random
 const int RANGE_FROM = 0,
           RANGE_TO = 3;
+const int PAS = 1;
 
- //  constante des differentes directions
+// Constantes pour les differentes directions
 const short BAS = 0,
             GAUCHE = 1,
             HAUT = 2,
             DROIT = 3;
+
 /**
- *  afficher le terrain a l'utilisateur
- *
- * @param terrain
+ * Efface le contenu de la console et affiche le terrain dans l'etat actuel.
+ * @param terrain Terrain à afficher
  */
-void afficherTerrain(Terrain terrain)
+void afficherTerrain(const Terrain& terrain)
 {
     system("cls");
-    for (Ligne ligne : terrain)
+    for (const Ligne& ligne : terrain)
     {
         for (char j : ligne)
             cout << ' ' << j;
@@ -50,100 +50,87 @@ void afficherTerrain(Terrain terrain)
     }
     cout << endl;
 }
+
 /**
- * permet de generer un nombre aleatoir
- * @return nombre aleatoire
+ * Retourne la valeur d'une case demandee
+ * @param terrain Terrain ou chercher la case
+ * @param position Position à chercher
+ * @return Valeur de la case demandee
  */
-int randomPosition()
-{
-    random_device rand_dev;
-    default_random_engine generator(rand_dev());
-    uniform_int_distribution<int> distr(RANGE_FROM, RANGE_TO);
-    return distr(generator);
+char retournerCase(const Terrain& terrain, Tondeuse position){
+    return (char) terrain[(size_t) position[LIGNE]][(size_t) position[COLONNE]];
 }
 /**
- *  retourne la valeur d'une case demandee
- * @param terrain
- * @param position
- * @return
+ * Obtenir une nouvelle position aleatoire valide
+ * @param positionActuel Position actuel de la tondeuse
+ * @param terrain Terrain ou se deplacer
+ * @return Prochaine position de la tondeuse
  */
-char retournerCase(Terrain terrain, Tondeuse position){
-    return terrain[position[LIGNE]][position[COLONNE]];
-}
-/**
- *
- * @param tondeuse
- * @param terrain
- * @return prochaine prostion de la tondeuse
- */
-Tondeuse prochainPosition(Tondeuse tondeuse, Terrain terrain)
+Tondeuse prochainPosition(const Tondeuse& positionActuel, const Terrain& terrain)
 {
-    Tondeuse nouvellePostion  = tondeuse;
-    int ligneTondeuse,
-        colonneTondeuse;
+    Tondeuse nouvellePostion;
     do
     {
-        ligneTondeuse=tondeuse[0];
-        colonneTondeuse=tondeuse[1];
+        nouvellePostion = positionActuel;
+
         // Obtenir une direction aleatoire et calculer nouvelle position
-        switch (randomPosition())
+        switch (randomNumber(RANGE_FROM,RANGE_TO))
         {
             case BAS:
-                nouvellePostion[LIGNE] = ligneTondeuse +1;
+                nouvellePostion[LIGNE] = positionActuel[LIGNE] + PAS;
                 break;
             case GAUCHE:
-                nouvellePostion[COLONNE] = colonneTondeuse -1;
+                nouvellePostion[COLONNE] = positionActuel[COLONNE] - PAS;
                 break;
             case HAUT:
-                nouvellePostion[LIGNE] = ligneTondeuse -1;
+                nouvellePostion[LIGNE] = positionActuel[LIGNE] - PAS;
                 break;
             case DROIT:
-                nouvellePostion[COLONNE] = colonneTondeuse +1;
+                nouvellePostion[COLONNE] = positionActuel[COLONNE] + PAS;
                 break;
         }
 
-        // Valider la nouvelle position
+        // Valider la nouvelle position, si il y a un obstacle ou une limite on
+        // refait
     } while ( retournerCase(terrain, nouvellePostion) == LIMITE ||
         retournerCase(terrain, nouvellePostion) == OBSTACLE);
 
     return nouvellePostion;
 }
+
 /**
- * Coupe l'herbe du terrain --> permet de remplacer l'herbe non coupee
- * par de l'herbe coupee
- *
- * @param tondeuse
- * @param terrain
- * @return terrain
+ * Coupe l'herbe haute du terrain
+ * @param tondeuse Tondeuse avec la position ou elle peut couper
+ * @param terrain Terrain ou couper
+ * @return Terrain coupe
  */
 
-Terrain couper(Tondeuse tondeuse, Terrain terrain)
+Terrain couper(const Tondeuse& tondeuse,Terrain terrain)
 {
     if (retournerCase(terrain, tondeuse) == HERBE)
-        terrain[tondeuse[LIGNE]][tondeuse[COLONNE]] = 'O';
+        terrain[(size_t) tondeuse[LIGNE]][(size_t) tondeuse[COLONNE]] = COUPE;
     return terrain;
 }
+
 /**
- *  fonction principale du programme
- *  elle appelera les sous programme afin de :
- *  - afficher le terrain
- *  - tondre le terrain
- *  - possibilite d'afficher l'evolution de la tonte
- * @param terrain
- * @param tondeuse
- * @param nbrePas
- * @param afficherEvolution
+ * Tondre un terrain done avec une tondeuse un nombre de pass definie
+ * @param terrain Terrain a tondre
+ * @param tondeuse Tondeuse avec la position initiale
+ * @param nbrePas Nombre de pas a tondre/passer
+ * @param afficherEvolution Afficher ou pas la mise a jour du terrain
  */
 void tondre(Terrain terrain, Tondeuse tondeuse, int nbrePas, bool afficherEvolution)
 {
     afficherTerrain(terrain);
+
     for (int i = 0; i < nbrePas; ++i)
     {
         tondeuse = prochainPosition(tondeuse, terrain);
         terrain = couper(tondeuse, terrain);
         if (afficherEvolution)
             afficherTerrain(terrain);
-        cout << i << endl;
     }
+
     afficherTerrain(terrain);
+    attendreQuitter('q', "Appuyer sur la touche 'q' pour quitter");
 }

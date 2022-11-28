@@ -16,6 +16,22 @@
 #ifndef LABO_TONDEUSE_ANNEXE_H
 #define LABO_TONDEUSE_ANNEXE_H
 
-#include<vector> // std::vector
+#include <string> // std::string
+
+/**
+ * Retourne un nombre aleatoire entre deux valeurs compris
+ * @param min Limite inferieur
+ * @param max Limite superieur
+ * @return Nombre aleatoire a retourner
+ */
+int randomNumber(int min,int max);
+
+/**
+ * Affiche un message de fin du programme, et attents que l'utilisateur entre une
+ * touche donnee
+ * @param touche Touche pour finaliser
+ * @param message Message a afficher
+ */
+void attendreQuitter(const char& touche, const std::string& message);
 
 #endif //LABO_TONDEUSE_ANNEXE_H

@@ -18,7 +18,7 @@
 
 #include <vector> // std::vector
 
-static char L = '#',
+static const char L = '#',
     X = 'X',
     H = '~',
     C = '.',
