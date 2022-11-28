@@ -57,22 +57,26 @@ char retournerCase(Terrain terrain, Tondeuse position){
 Tondeuse prochainPosition(Tondeuse tondeuse, Terrain terrain)
 {
     Tondeuse nouvellePostion  = tondeuse;
+    int ligneTondeuse,
+        colonneTondeuse;
     do
     {
+        ligneTondeuse=tondeuse[0];
+        colonneTondeuse=tondeuse[1];
         // Obtenir une direction aleatoire et calculer nouvelle position
         switch (randomPosition())
         {
             case BAS:
-                nouvellePostion[LIGNE] = ++nouvellePostion[LIGNE];
+                nouvellePostion[LIGNE] = ligneTondeuse +1;
                 break;
             case GAUCHE:
-                nouvellePostion[COLONNE] = --nouvellePostion[COLONNE];
+                nouvellePostion[COLONNE] = colonneTondeuse -1;
                 break;
             case HAUT:
-                nouvellePostion[LIGNE] = --nouvellePostion[LIGNE];
+                nouvellePostion[LIGNE] = ligneTondeuse -1;
                 break;
             case DROIT:
-                nouvellePostion[COLONNE] = ++nouvellePostion[COLONNE];
+                nouvellePostion[COLONNE] = colonneTondeuse +1;
                 break;
         }
 
